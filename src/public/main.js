@@ -1,34 +1,39 @@
-const map = L.map('map', {
-   center: [latitude, longitude],
-   zoom: 15
-});
+const socket = io.connect();
 
-map.locate({ enableHighAccuracy: true });
-map.on('locationfound', (e) => {
-   console.log(e);
-});
+if (navigator.geolocation) {
+   navigator.geolocation.getCurrentPosition(function (position) {
+      var latitude = position.coords.latitude;
+      var longitude = position.coords.longitude;
 
-var latitude = position.coords.latitude;
-var longitude = position.coords.longitude;
+      console.log(latitude, longitude);
+      const map = L.map('map', {
+         center: [latitude, longitude],
+         zoom: 15
+      });
 
-L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw', {
-   maxZoom: 25,
-   attribution: 'Datos del mapa de &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a>, ' + '<a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' + 'Imágenes © <a href="https://www.mapbox.com/">Mapbox</a>',
-   id: 'mapbox/streets-v11'
-}).addTo(map);
 
-L.marker([latitude, longitude]).addTo(map)
-   .bindPopup('Tu ubicacion')
-   .openPopup();
+      map.locate({ enableHighAccuracy: true });
+      map.on('locationfound', (e) => {
+         console.log(e);
+      });
 
-L.marker([10.989727871655939, -74.78856951470898]).addTo(map)
-   .bindPopup('Portal de prado')
-   .openPopup();
+      var latitude = position.coords.latitude;
+      var longitude = position.coords.longitude;
 
-      // L.Routing.control({
-      //    waypoints: [
-      //       L.latLng(latitude, longitude),
-      //       L.latLng(11.005652304937687, -74.81706619294472)
-      //    ],
-      //    language: 'es'
-      // }).addTo(mymap);
+      L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw', {
+         maxZoom: 25,
+         id: 'mapbox/streets-v11'
+      }).addTo(map);
+
+      L.marker([10.996730821187757, -74.79675837301376]).addTo(map)
+      .bindPopup('TAE')
+      .openPopup();
+
+      L.marker([latitude, longitude]).addTo(map)
+         .bindPopup('Tu ubicación')
+         .openPopup();
+
+   });
+} else {
+   alert('Necesitamos acceder a tu ubicacion')
+}
