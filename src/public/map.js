@@ -18,9 +18,9 @@ L.marker([10.996730821187757, -74.79675837301376]).addTo(map)
 function getLocation() {
    map.locate({ enableHighAccuracy: true });
    map.on('locationfound', (e) => {
+
       const lat = e.latlng.lat;
       const lng = e.latlng.lng;
-      console.log(userLocation);
       if (userMarker) {
          map.removeLayer(userMarker);
          userMarker = L.marker([lat, lng]);
@@ -32,6 +32,7 @@ function getLocation() {
          userMarker.bindPopup(user);
          map.addLayer(userMarker);
       }
+      
    });
 }
 getLocation();
