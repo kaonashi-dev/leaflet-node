@@ -13,7 +13,7 @@ const map = L.map('map', {
 });
 
 L.marker([10.996730821187757, -74.79675837301376]).addTo(map)
-   .bindPopup('TAE')
+   .bindPopup('Punto de referencia')
    .openPopup();
 
 // function getLocation() {
@@ -39,10 +39,10 @@ L.marker([10.996730821187757, -74.79675837301376]).addTo(map)
 
 const watchID = navigator.geolocation.watchPosition(function (position) {
 
-   alert('te estoy seguiendo...')
    const lat = position.coords.latitude;
    const lng = position.coords.longitude;
    const latlng = { lat, lng }
+
    if (userMarker) {
       map.removeLayer(userMarker);
       userMarker = L.marker([lat, lng]);
@@ -56,6 +56,7 @@ const watchID = navigator.geolocation.watchPosition(function (position) {
    }
 
 });
+
 // setInterval(() => {
 //    console.log('cambio');
 //    getLocation();
